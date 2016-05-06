@@ -1,3 +1,7 @@
+<% unless locals.empty? %>
+  <%= message %>
+<% end %>
+
 <h1>View all your posts here</h1>
 
 <% @posts.each do |post| %>

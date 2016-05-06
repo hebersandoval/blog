@@ -6,7 +6,7 @@ class PostsController < ApplicationController
       @posts = Post.all
       erb :'posts/index'
     else
-      redirect to '/login'
+      redirect to '/login', locals: {message: "Please login or create an account."}
     end
   end
 
@@ -15,17 +15,17 @@ class PostsController < ApplicationController
       @user = User.find_by_id(session[:user_id])
       erb :'posts/new'
     else
-      redirect to '/login'
+      redirect to '/login', locals: {message: "Please login or create an account."}
     end
   end
 
   post '/posts' do
     if params[:content] == ""
-      redirect to '/posts/new'
+      redirect to '/posts/new', locals: {message: "Please fill in the Content."}
     else
       @user = User.find_by_id(session[:user_id])
       @post = Post.create(content: params[:content], title: params[:title], user_id: @user.id)
-      redirect to "/posts/#{@post.id}"
+      redirect to "/posts/#{@post.id}", locals: {message: "Post successfully saved!"}
     end
   end
 
@@ -60,7 +60,7 @@ class PostsController < ApplicationController
       @post = Post.find_by_id(params[:id])
       @post.content = params[:content]
       @post.save
-      redirect to "/posts/#{@post.id}"
+      redirect to "/posts/#{@post.id}", locals: {message: "Post successfully updated."}
     end
   end
 
@@ -69,7 +69,7 @@ class PostsController < ApplicationController
     @user = User.find_by_id(session[:user_id])
     if @user == @post.user
       @post.delete
-      redirect to '/posts'
+      redirect to '/posts', locals: {message: "Post successfully deleted."}
     else
       redirect to "/posts/#{params[:id]}"
     end

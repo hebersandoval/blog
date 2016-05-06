@@ -15,7 +15,7 @@ class UsersController < ApplicationController
       @user = User.new(username: params[:username], email: params[:email], password: params[:password])
       @user.save
       session[:user_id] = @user.id
-      redirect to '/posts'
+      redirect to '/posts', locals: {message: "You have signed in."}
     end
   end
 
@@ -33,14 +33,14 @@ class UsersController < ApplicationController
       session[:user_id] = @user.id
       redirect to '/posts'
     else
-      erb :'users/login'
+      erb :'users/login', locals: {message: "Incorrect username and/or password."}
     end
   end
 
   get '/logout' do
     if session[:user_id] != nil
       session.clear
-      redirect to '/login'
+      redirect to '/login', locals: {message: "You are logged off."}
     else
       redirect to '/'
     end

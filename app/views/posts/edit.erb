@@ -1,3 +1,7 @@
+<% unless locals.empty? %>
+  <%= message %>
+<% end %>
+
 <h1>Update or edit your post here</h1>
 
 <form action="/posts/<%= @post.id %>" method="POST">
