@@ -20,12 +20,21 @@ class UsersController < ApplicationController
   end
 
   get '/login' do
-    erb :'/users/login'
+    if session[:user_id]
+      redirect to '/posts'
+    else
+      erb :'/users/login'
+    end
   end
 
   post '/login' do
-    # get input for validation
-    #redirect to '/posts'
+    @user = User.find_by(username: params[:username])
+    if @user && @user.authenticate(params[:password])
+      session[:user_id] = @user.id
+      redirect to '/posts'
+    else
+      erb :'users/login'
+    end
   end
 
   get '/logout' do
