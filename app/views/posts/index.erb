@@ -1,1 +1,9 @@
 <h1>View all your posts here</h1>
+
+<% @posts.each do |post| %>
+
+<h3><%= post.id %><%= post.title %></h3>
+
+<h4>Author: <%= post.user.username %></h4>
+
+<% end %>

@@ -1,7 +1,13 @@
 class PostsController < ApplicationController
 
   get '/posts' do
-    erb :'posts/index'
+    if session[:user_id]
+      @user = User.find_by_id(session[:user_id])
+      @posts = Post.all
+      erb :'posts/index'
+    else
+      redirect to '/login'
+    end
   end
 
   get '/posts/new' do # create action
