@@ -42,12 +42,14 @@ class PostsController < ApplicationController
   get '/posts/:id/edit' do # update action
     @post = Post.find_by_id(params[:id])
     @user = User.find_by_id(session[:user_id])
-    if @user == @post.user
-      erb :'/posts/edit'
-    elsif
-      redirect to "/posts/#{@post.id}"
+    if session[:user_id]
+      if @user == @post.user
+        erb :'/posts/edit'
+      else
+        redirect "/posts/#{@post.id}"
+      end
     else
-      redirect to '/login'
+      redirect '/login'
     end
   end
 
@@ -63,8 +65,7 @@ class PostsController < ApplicationController
   end
 
   delete '/posts/:id/delete' do
-    # @post.delete
-    # redirect to '/posts'
+
   end
 
 end
