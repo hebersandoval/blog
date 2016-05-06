@@ -11,23 +11,55 @@ class PostsController < ApplicationController
   end
 
   get '/posts/new' do # create action
-    erb :'posts/new'
+    if session[:user_id]
+      @user = User.find_by_id(session[:user_id])
+      erb :'posts/new'
+    else
+      redirect to '/login'
+    end
   end
 
   post '/posts' do
-    # get input from user via params
+    if params[:content] == ""
+      redirect to '/posts/new'
+    else
+      User.find_by_id(session[:user_id])
+      Post.create(content: params[:content], title: params[:title], user_id: @user.id)
+      redirect to "/posts/#{@post.id}"
+    end
   end
 
   get '/posts/:id' do # show action
-    erb :'posts/show'
+    if session[:user_id]
+      @user = User.find_by_id(session[:user_id])
+      @post = Post.find_by_id(params[:id])
+      erb :'posts/show'
+    else
+      redirect to '/login'
+    end
   end
 
   get '/posts/:id/edit' do # update action
-    erb :'/posts/edit'
+    @post = Post.find_by_id(params[:id])
+    @user = User.find_by_id(session[:user_id])
+    if @user == @post.user
+      erb :'/posts/edit'
+    elsif
+      redirect to "/posts/#{@post.id}"
+    else
+      redirect to '/login'
+    end
   end
 
   patch '/posts/:id' do
-    # get input from user via params to update db
+    if params[:content] == ""
+      redirect to "/posts/#{params[:id]}/edit"
+    else
+      @post = Post.find_by_id(params[:id])
+      @post.content = params[:content]
+      @post.save
+      redirect to "/posts/#{@post.id}"
+    end
   end
 
   delete '/posts/:id/delete' do
