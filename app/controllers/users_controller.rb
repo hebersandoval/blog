@@ -1,11 +1,22 @@
 class UsersController < ApplicationController
 
   get '/signup' do
-    erb :'users/signup'
+    if session[:user_id]
+      redirect to '/posts'
+    else
+      erb :'users/signup'
+    end
   end
 
   post '/signup' do
-    # get input from user via params also provide validations
+    if params[:username] == "" || params[:email] == "" || params[:password] == ""
+      redirect to '/signup'
+    else
+      @user = User.new(username: params[:username], email: params[:email], password: params[:password])
+      @user.save
+      session[:user_id] = @user.id
+      redirect to '/posts'
+    end
   end
 
   get '/login' do
