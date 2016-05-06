@@ -2,8 +2,14 @@
 
 <% @posts.each do |post| %>
 
-<h3><%= post.id %><%= post.title %></h3>
-
 <h4>Author: <%= post.user.username %></h4>
 
+<h4>Title: <a href="/posts/<%=post.id%>"><%=post.title%></a></h4>
+
+<p>Content: <%=post.content%></p>
+
 <% end %>
+
+<a href='/posts/new'>New Post</a>
+<br />
+<a href="/logout">Logout</a>

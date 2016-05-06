@@ -1,9 +1,17 @@
 <h1>Your post will show or display here</h1>
 
-<h3><%= @post.title %></h3>
-<h4><%= @post.content %></h4>
+<h3>Title: <%= @post.title %></h3>
+<h4>Content: <%= @post.content %></h4>
 
-<form action="/post/<%= @post.id %>/delete" method="POST">
+<form action="/posts/<%= @post.id %>/delete" method="POST">
   <input type="hidden" id="hidden" name="_method" value="DELETE">
   <input type="submit" value="Delete Post">
 </form>
+
+<% if @user == @post.user%>
+    <a href="/posts/<%=@post.id%>/edit">Edit Post</a>
+<%end%>
+<br />
+<a href='/posts'>View All Posts</a>
+<br />
+<a href="/logout">Logout</a>
