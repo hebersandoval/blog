@@ -23,8 +23,8 @@ class PostsController < ApplicationController
     if params[:content] == ""
       redirect to '/posts/new'
     else
-      User.find_by_id(session[:user_id])
-      Post.create(content: params[:content], title: params[:title], user_id: @user.id)
+      @user = User.find_by_id(session[:user_id])
+      @post = Post.create(content: params[:content], title: params[:title], user_id: @user.id)
       redirect to "/posts/#{@post.id}"
     end
   end
