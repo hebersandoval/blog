@@ -6,4 +6,5 @@ end
 
 use PostsController
 use UsersController
+use Rack::MethodOverride
 run ApplicationController
