@@ -1,7 +1,7 @@
 class PostsController < ApplicationController
 
   get '/posts' do
-    if session[:user_id]
+    if logged_in? # session[:user_id]
       @user = User.find_by_id(session[:user_id])
       @posts = Post.all
       erb :'posts/index'
@@ -11,7 +11,7 @@ class PostsController < ApplicationController
   end
 
   get '/posts/new' do # create action
-    if session[:user_id]
+    if logged_in? # session[:user_id]
       @user = User.find_by_id(session[:user_id])
       erb :'posts/new'
     else
@@ -30,7 +30,7 @@ class PostsController < ApplicationController
   end
 
   get '/posts/:id' do # show action
-    if session[:user_id]
+    if logged_in? # session[:user_id]
       @user = User.find_by_id(session[:user_id])
       @post = Post.find_by_id(params[:id])
       erb :'posts/show'
@@ -42,7 +42,7 @@ class PostsController < ApplicationController
   get '/posts/:id/edit' do # update action
     @post = Post.find_by_id(params[:id])
     @user = User.find_by_id(session[:user_id])
-    if session[:user_id]
+    if logged_in? # session[:user_id]
       if @user == @post.user
         erb :'/posts/edit'
       else
