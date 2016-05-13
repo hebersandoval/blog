@@ -2,7 +2,7 @@
   <%= message %>
 <% end %>
 
-<h1>View all your posts here</h1>
+<h1>View All Your Posts Below</h1>
 
 <% @posts.each do |post| %>
 
@@ -11,6 +11,8 @@
 <h4>Title: <a href="/posts/<%=post.id%>"><%=post.title%></a></h4>
 
 <p>Content: <%=post.content%></p>
+
+<p>--------------------------------------------------</p>
 
 <% end %>
 
