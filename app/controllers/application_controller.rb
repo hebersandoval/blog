@@ -15,6 +15,9 @@ class ApplicationController < Sinatra::Base
 
   helpers do
     def logged_in? # returns true or false based on the presence of a session[:user_id]
+      # session[:user_id] => nil
+      # !session[:user_id] => true
+      # !!session[:user_id] => false
       !!session[:user_id] # in order to keep track of a current user throughout a session, set up the session hash to store the :user_id in the hash during a controller action
     end
 
