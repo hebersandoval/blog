@@ -10,7 +10,7 @@ class UsersController < ApplicationController
 
   post '/signup' do # this route is responsible for receiving the POST request that happens when a user hits "submit" on the form
     if params[:username] == "" || params[:email] == "" || params[:password] == ""
-      redirect to '/signup'
+      erb :'users/signup'
     else
       @user = User.new(username: params[:username], email: params[:email], password: params[:password]) # get the new user's info from params, use that info to create and save a new user
       @user.save

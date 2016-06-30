@@ -25,7 +25,9 @@ class PostsController < ApplicationController
       redirect to '/posts/new', locals: {message: "Please fill in the Content."}
     else
       @user = User.find_by_id(session[:user_id])
-      @post = Post.create(content: params[:content], title: params[:title], user_id: @user.id)
+      # associates a post to a user by using the .create method, which automatically sets the @user.id
+      @post = @user.posts.create(content: params[:content], title: params[:title])
+      # @post = Post.create(content: params[:content], title: params[:title], user_id: @user.id)
       redirect to "/posts/#{@post.id}", locals: {message: "Post successfully saved!"}
     end
   end
