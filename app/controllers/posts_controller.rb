@@ -1,6 +1,7 @@
 class PostsController < ApplicationController
 
-  get '/posts' do
+  # routes match the web request sent by the client to some code in our application that tells the app what data and templates to send back to the client.
+  get '/posts' do # index action
     if logged_in? # session[:user_id]
       @user = User.find_by_id(session[:user_id])
       @posts = Post.all
@@ -19,7 +20,7 @@ class PostsController < ApplicationController
     end
   end
 
-  post '/posts' do
+  post '/posts' do # create action
     if params[:content] == ""
       redirect to '/posts/new', locals: {message: "Please fill in the Content."}
     else
@@ -53,7 +54,7 @@ class PostsController < ApplicationController
     end
   end
 
-  patch '/posts/:id' do
+  patch '/posts/:id' do # update action
     if params[:content] == ""
       redirect to "/posts/#{params[:id]}/edit"
     else
